@@ -6,7 +6,7 @@ description: A Helm chart for deploying the entire umbrella of saleor charts
 type: application
 version: 0.1.1
 appVersion: 2.11.1
-kubeVersion: ">=1.9.0"
+kubeVersion: ""
 keywords:
   - saleor
   - ecommerce
@@ -55,7 +55,7 @@ dependencies:
   ## 3. Pods for the celery workers which execute particular tasks on demand
   - name: saleor-core
     version: "0.1.1"
-    repository: "https://eirenauts.github.io/saleor-k8s"
+    repository: "file://../saleor-core"
     condition: saleor-core.enabled
     tags:
       - workers
@@ -65,7 +65,7 @@ dependencies:
   ## Notes: This is a web server of pre-built static assets and emails for the storefront which customers see
   - name: saleor-storefront
     version: "0.1.1"
-    repository: "https://eirenauts.github.io/saleor-k8s"
+    repository: "file://../saleor-storefront"
     condition: saleor-storefront.enabled
     tags:
       - ui
@@ -74,7 +74,7 @@ dependencies:
   ## Notes: This is a web server of pre-built static assets for the administrative dashboard
   - name: saleor-dashboard
     version: "0.1.1"
-    repository: "https://eirenauts.github.io/saleor-k8s"
+    repository: "file://../saleor-dashboard"
     condition: saleor-dashboard.enabled
     tags:
       - ui
