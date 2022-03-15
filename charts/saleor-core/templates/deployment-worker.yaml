@@ -74,11 +74,11 @@ spec:
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - /bin/bash
-            - -c
-            - >
-              {{ include "saleor.postgresql.isReady" . | nindent 14 }}
-              {{ include "saleor.redis.isReady" . | nindent 14 }}
+          - /bin/bash
+          - -c
+          - >
+            {{ include "saleor.postgresql.isReady" . | nindent 14 }}
+            {{ include "saleor.redis.isReady" . | nindent 14 }}
         # Deploy static assets into memory
         - name: "{{- include "saleor-core.workerContainerName" . }}-init-2"
           volumeMounts:
@@ -98,10 +98,10 @@ spec:
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - /bin/bash
-            - /home/saleor/configure_web.sh
+          - /bin/bash
+          - /home/saleor/configure_web.sh
           args:
-            - "true"
+          - "true"
       containers:
         # Deploy celery workers
         - name: "{{- include "saleor-core.workerContainerName" . }}"
@@ -121,13 +121,13 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["celery"]
           args:
-            - --app
-            - saleor.celeryconf:app
-            - worker
-            - --without-gossip
-            - --without-mingle
-            - --heartbeat-interval={{ .Values.worker.heartBeatIntervalSeconds }}
-            - --loglevel={{ .Values.worker.logLevel }}
+          - --app
+          - saleor.celeryconf:app
+          - worker
+          - --without-gossip
+          - --without-mingle
+          - --heartbeat-interval={{ .Values.worker.heartBeatIntervalSeconds }}
+          - --loglevel={{ .Values.worker.logLevel }}
           {{- if (eq (.Values.worker.concurrency.type) "fixed") }}
           - --concurrency={{ .Values.worker.concurrency.fixed }}
           {{- else if (eq (.Values.worker.concurrency.type) "auto") }}
