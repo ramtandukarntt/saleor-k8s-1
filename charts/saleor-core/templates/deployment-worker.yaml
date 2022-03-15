@@ -7,9 +7,9 @@ metadata:
     app.kubernetes.io/component: worker
 spec:
   # Running this app without some form of central storage does not make sense
-  {{- if not (and (not .Values.web.autoscaling.enabled) (and (not .Values.persistence.enabled) (not .Values.externalServices.cloudStorage.enabled))) }}
+{{- if not (and (not .Values.web.autoscaling.enabled) (and (not .Values.persistence.enabled) (not .Values.externalServices.cloudStorage.enabled))) }}
   replicas: {{ .Values.web.replicaCount }}
-  {{- end }}
+{{- end }}
   selector:
     matchLabels:
       {{- include "saleor-core.selectorLabels" . | nindent 6 }}
@@ -18,11 +18,11 @@ spec:
     metadata:
       annotations:
         checksum/config-web: {{ include (print $.Template.BasePath "/configmap-web.yaml") . | sha256sum }}
-      {{- if not .Values.alternativeAppSettingsConfigMap }}
+        {{- if not .Values.alternativeAppSettingsConfigMap }}
         checksum/config-settings: {{ include (print $.Template.BasePath "/configmap-settings.yaml") . | sha256sum }}
       {{- end }}
       {{- with .Values.podAnnotations }}
-      {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 10 }}
       {{- end }}
       labels:
         {{- include "saleor-core.selectorLabels" . | nindent 8 }}
@@ -41,10 +41,10 @@ spec:
         - name: custom-settings
           configMap:
           {{- if (not .Values.alternativeAppSettingsConfigMap) }}
-          name: {{ include "saleor-core.fullname" . }}-custom-settings
-          {{- else }}
-          name: {{ .Values.alternativeAppSettingsConfigMap }}
-          {{- end }}
+            name: {{ include "saleor-core.fullname" . }}-custom-settings
+            {{- else }}
+            name: {{ .Values.alternativeAppSettingsConfigMap }}
+            {{- end }}
         # ConfigMap for the nginx configuration and the static assets script
         - name: web-conf
           configMap:
@@ -52,15 +52,15 @@ spec:
         # Volume for the images and unstructured data
         - name: saleor-data-media
         {{- if and .Values.persistence.enabled .Values.persistence.existingPvc }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingPvc }}
-        {{- else if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ default (include "saleor-core.fullname" .) }}
-        {{- else }}
-        emptyDir:
-          medium: Memory
-        {{- end }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingPvc }}
+          {{- else if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (include "saleor-core.fullname" .) }}
+          {{- else }}
+          emptyDir:
+            medium: Memory
+          {{- end }}
         # Volume for the web assets data
         - name: saleor-data-static
           emptyDir:
@@ -70,7 +70,7 @@ spec:
         - name: "{{- include "saleor-core.workerContainerName" . }}-init-1"
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
-          {{- include "saleor-core.env" . | indent 10 }}
+          {{- include "saleor-core.env" . | nindent 10 }}
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
@@ -82,19 +82,19 @@ spec:
         # Deploy static assets into memory
         - name: "{{- include "saleor-core.workerContainerName" . }}-init-2"
           volumeMounts:
-            - name: custom-settings
-              mountPath: /app/saleor/custom-settings.py
-              subPath: custom-settings.py
-              readOnly: true
-            - name: web-conf
-              mountPath: /home/saleor/configure_web.sh
-              subPath: configure_web.sh
-              readOnly: true
-            - name: saleor-data-static
-              mountPath: /app/static
+          - name: custom-settings
+            mountPath: /app/saleor/custom-settings.py
+            subPath: custom-settings.py
+            readOnly: true
+          - name: web-conf
+            mountPath: /home/saleor/configure_web.sh
+            subPath: configure_web.sh
+            readOnly: true
+          - name: saleor-data-static
+            mountPath: /app/static
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
-          {{- include "saleor-core.env" . | indent 10 }}
+            {{- include "saleor-core.env" . | nindent 12 }}
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
@@ -106,15 +106,15 @@ spec:
         # Deploy celery workers
         - name: "{{- include "saleor-core.workerContainerName" . }}"
           volumeMounts:
-            - name: saleor-data-static
-              mountPath: /app/static
-            - name: saleor-data-media
-              mountPath: /app/media
-            - name: custom-settings
-              mountPath: /app/saleor/custom-settings.py
-              subPath: custom-settings.py
-              readOnly: true
-          {{- include "saleor-core.env" . | indent 10 }}
+          - name: saleor-data-static
+            mountPath: /app/static
+          - name: saleor-data-media
+            mountPath: /app/media
+          - name: custom-settings
+            mountPath: /app/saleor/custom-settings.py
+            subPath: custom-settings.py
+             readOnly: true
+          {{- include "saleor-core.env" . | nindent 10 }}
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -147,34 +147,34 @@ spec:
           livenessProbe: {{ toYaml .Values.worker.livenessProbeSettings | nindent 12 }}
             exec:
               command:
-                - /bin/bash
-                - -c
-                - >-
-                {{- if (eq .Values.worker.autoscaling.enabled false) }}
-                # This liveness probe is only suitable if autoscaling is turned off as it can trigger upscaling
-                'if [[ "$(celery --app=saleor.celeryconf:app inspect ping | grep pong)" == *"pong"* ]]; then exit 0; else exit 1; fi && echo "ready"'
-                {{- else if (eq .Values.worker.autoscaling.enabled true) }}
-                'echo "ready"'
-                {{- end }}
+              - /bin/bash
+              - -c
+              - >-
+              {{- if (eq .Values.worker.autoscaling.enabled false) }}
+              # This liveness probe is only suitable if autoscaling is turned off as it can trigger upscaling
+              'if [[ "$(celery --app=saleor.celeryconf:app inspect ping | grep pong)" == *"pong"* ]]; then exit 0; else exit 1; fi && echo "ready"'
+              {{- else if (eq .Values.worker.autoscaling.enabled true) }}
+              'echo "ready"'
+              {{- end }}
           {{- end }}
           # Disabled by default due to issues with failures that need to be worked out
           {{- if .Values.worker.readinessProbeSettings.enabled }}
           readinessProbe: {{ toYaml .Values.worker.readinessProbeSettings | nindent 12 }}
             exec:
               command:
-                - /bin/bash
-                - -c
-                - >-
-                {{- if (eq .Values.worker.autoscaling.enabled false) }}
-                # This liveness probe is only suitable if autoscaling is turned off as it can trigger upscaling
-                'if [[ "$(celery --app=saleor.celeryconf inspect ping | grep pong)" == *"pong"* ]]; then exit 0; else exit 1; fi && echo "ready"'
-                {{- else if (eq .Values.worker.autoscaling.enabled true) }}
-                'echo "ready"'
-                {{- end }}
+              - /bin/bash
+              - -c
+              - >-
+              {{- if (eq .Values.worker.autoscaling.enabled false) }}
+               This liveness probe is only suitable if autoscaling is turned off as it can trigger upscaling
+              'if [[ "$(celery --app=saleor.celeryconf inspect ping | grep pong)" == *"pong"* ]]; then exit 0; else exit 1; fi && echo "ready"'
+              {{- else if (eq .Values.worker.autoscaling.enabled true) }}
+              'echo "ready"'
+              {{- end }}
           {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
-      {{- with .Values.worker.nodeSelector }}
+        {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

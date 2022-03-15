@@ -19,12 +19,12 @@ spec:
     metadata:
       annotations:
         checksum/config-web: {{ include (print $.Template.BasePath "/configmap-web.yaml") . | sha256sum }}
-      {{- if not .Values.alternativeAppSettingsConfigMap }}
-      checksum/config-settings: {{ include (print $.Template.BasePath "/configmap-settings.yaml") . | sha256sum }}
-      {{- end }}
-      {{- with .Values.podAnnotations }}
-      {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- if not .Values.alternativeAppSettingsConfigMap }}
+        checksum/config-settings: {{ include (print $.Template.BasePath "/configmap-settings.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "saleor-core.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: web
@@ -42,30 +42,30 @@ spec:
         - name: custom-settings
           configMap:
           {{- if (not .Values.alternativeAppSettingsConfigMap) }}
-          name: {{ include "saleor-core.fullname" . }}-custom-settings
-          {{- else }}
-          name: {{ .Values.alternativeAppSettingsConfigMap }}
-          {{- end }}
+            name: {{ include "saleor-core.fullname" . }}-custom-settings
+            {{- else }}
+            name: {{ .Values.alternativeAppSettingsConfigMap }}
+            {{- end }}
         # Volume for the images and unstructured data
         - name: saleor-data-media
         {{- if and .Values.persistence.enabled .Values.persistence.existingPvc }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingPvc }}
-        {{- else if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ default (include "saleor-core.fullname" .) }}
-        {{- else }}
-        emptyDir:
-          medium: Memory
-        {{- end }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingPvc }}
+            {{- else if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (include "saleor-core.fullname" .) }}
+            {{- else }}
+          emptyDir:
+            medium: Memory
+            {{- end }}
         # ConfigMap for the nginx configuration and the static assets script
         - name: web-conf
           configMap:
             name: {{ include "saleor-core.fullname" . }}-web
         # Volume for the web assets data
         - name: saleor-data-static
-        emptyDir:
-          medium: Memory
+          emptyDir:
+            medium: Memory
       initContainers:
         # Wait for redis and postgresql to be ready
         - name: "{{- include "saleor-core.webContainerName" . }}-init-1"
@@ -83,16 +83,16 @@ spec:
         # Deploy static assets into memory
         - name: "{{- include "saleor-core.webContainerName" . }}-init-2"
           volumeMounts:
-            - name: custom-settings
-              mountPath: /app/saleor/custom-settings.py
-              subPath: custom-settings.py
-              readOnly: true
-            - name: web-conf
-              mountPath: /home/saleor/configure_web.sh
-              subPath: configure_web.sh
-              readOnly: true
-            - name: saleor-data-static
-              mountPath: /app/static
+          - name: custom-settings
+            mountPath: /app/saleor/custom-settings.py
+            subPath: custom-settings.py
+            readOnly: true
+          - name: web-conf
+            mountPath: /home/saleor/configure_web.sh
+            subPath: configure_web.sh
+            readOnly: true
+          - name: saleor-data-static
+            mountPath: /app/static
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           {{- include "saleor-core.env" . | indent 10 }}
@@ -107,14 +107,14 @@ spec:
         # Deploy nginx web server
         - name: "{{- include "saleor-core.webContainerName" . }}"
           volumeMounts:
-            - name: web-conf
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
-            - name: saleor-data-static
-              mountPath: /app/static
-            - name: saleor-data-media
-              mountPath: /app/media
+          - name: web-conf
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+            readOnly: true
+          - name: saleor-data-static
+            mountPath: /app/static
+          - name: saleor-data-media
+            mountPath: /app/media
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag | default .Chart.AppVersion }}"
