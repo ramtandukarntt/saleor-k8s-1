@@ -215,8 +215,7 @@ ingress:
 
 ## Note:
 ## If not using cloudstorage as a backend for media and static assets
-## 
-ence.enabled must be set to true for a functional system
+## ence.enabled must be set to true for a functional system
 ## persistence.accessModes should be set to ReadWriteMany to support multiple replicas
 ## to allow for access to a central shared volume by multiple pods
 
