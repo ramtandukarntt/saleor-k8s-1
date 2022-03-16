@@ -53,7 +53,7 @@ data:
 {{- else if not (empty .Values.allowedHosts.hosts) }}
   ALLOWED_HOSTS: "*"
 {{- else }}
-  ALLOWED_HOSTS:
+  ALLOWED_HOSTS: "*"
 {{- end }}
   CREATE_IMAGES_ON_DEMAND: {{ .Values.images.createOnDemand | toString | title | quote }}
   ENABLE_DEBUG_TOOLBAR: {{ .Values.enableDjangoDebugToolbar | toString | title | quote }}
