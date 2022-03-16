@@ -49,9 +49,9 @@ data:
   MEDIA_URL: {{ .Values.mediaUrl | quote }}
   ENABLE_SILK: {{ .Values.enableSilk | toString | title | quote }}
 {{- if and .Values.allowedHosts.includeIngressHosts .Values.ingress.enabled }}
-  ALLOWED_HOSTS: {{ $all_hosts }}
+  ALLOWED_HOSTS: "*"
 {{- else if not (empty .Values.allowedHosts.hosts) }}
-  ALLOWED_HOSTS: {{ .Values.allowedHosts.hosts | join "," | trimAll "," }}
+  ALLOWED_HOSTS: "*"
 {{- else }}
   ALLOWED_HOSTS:
 {{- end }}
