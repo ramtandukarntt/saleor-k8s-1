@@ -113,7 +113,7 @@ spec:
           - name: custom-settings
             mountPath: /app/saleor/custom-settings.py
             subPath: custom-settings.py
-             readOnly: true
+            readOnly: true
           {{- include "saleor-core.env" . | nindent 10 }}
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
