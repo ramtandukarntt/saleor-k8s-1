@@ -4,6 +4,8 @@
 
 postgresql:
   enabled: true
+  persistence:
+    existingClaim: pgdata-pvc
 
 redis:
   enabled: true
