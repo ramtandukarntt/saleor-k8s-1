@@ -92,9 +92,9 @@ spec:
             readOnly: true
           - name: saleor-data-static
             mountPath: /app/static
+            {{- include "saleor-core.env" . | nindent 12 }}
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
-            {{- include "saleor-core.env" . | nindent 12 }}
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
