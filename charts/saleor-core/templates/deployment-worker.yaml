@@ -34,8 +34,6 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "saleor-core.serviceAccountName" . }}
       automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
         # ConfigMap for the django based application settings
         - name: custom-settings
@@ -68,8 +66,6 @@ spec:
       initContainers:
         # Wait for redis and postgresql to be ready
         - name: "{{- include "saleor-core.workerContainerName" . }}-init-1"
-          securityContext:
-            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           {{- include "saleor-core.env" . | nindent 10 }}
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -92,9 +88,7 @@ spec:
             readOnly: true
           - name: saleor-data-static
             mountPath: /app/static
-            {{- include "saleor-core.env" . | nindent 12 }}
-          securityContext:
-            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          {{- include "saleor-core.env" . | nindent 10 }}
           image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag | default (cat "dev-" .Chart.AppVersion) | nospace }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
@@ -115,8 +109,6 @@ spec:
             subPath: custom-settings.py
             readOnly: true
           {{- include "saleor-core.env" . | nindent 10 }}
-          securityContext:
-            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["celery"]
