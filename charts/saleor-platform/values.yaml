@@ -9,6 +9,8 @@ postgresql:
 
 redis:
   enabled: true
+  persistence:
+    existingClaim: redis-pvc
 
 nfs-server-provisioner:
   enabled: true
