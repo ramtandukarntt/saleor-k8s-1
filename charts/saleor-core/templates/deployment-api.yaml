@@ -48,13 +48,13 @@ spec:
         {{- if and .Values.persistence.enabled .Values.persistence.existingPvc }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingPvc }}
-            {{- else if .Values.persistence.enabled }}
+        {{- else if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ default (include "saleor-core.fullname" .) }}
-            {{- else }}
+        {{- else }}
           emptyDir:
             medium: Memory
-          {{- end }}
+        {{- end }}
       initContainers:
         # Wait for successful response from redis and postgresql
         - name: "{{- include "saleor-core.apiContainerName" . }}-init-1"
