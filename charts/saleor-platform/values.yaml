@@ -17,6 +17,8 @@ nfs-server-provisioner:
 
 saleor-core:
   enabled: true
+  persistence:
+    existingClaim: core-pvc
 
 saleor-storefront:
   enabled: true
