@@ -1,19 +1,11 @@
-{{- if and .Values.persistence.enabled (not .Values.persistence.existingPvc) }}
----
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "saleor-core.fullname" . }}
-  labels:
-    {{- include "saleor-core.labels" . | nindent 4 }}
+  name: core-pvc
 spec:
-{{- if .Values.persistence.storageClass }}
-  storageClassName: {{ .Values.persistence.storageClass }}
-{{- end }}
   accessModes:
-    - {{ .Values.persistence.accessMode }}
+    - ReadWriteMany
+  storageClassName: efs-sc2
   resources:
     requests:
-      storage: {{ .Values.persistence.size | quote }}
-  volumeMode: {{ .Values.persistence.volumeMode }}
-{{- end -}}
+      storage: 5Gi
