@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: efs-sc2
+  storageClassName: efs-sc
   resources:
     requests:
       storage: 5Gi
@@ -15,11 +15,13 @@ kind: PersistentVolume
 metadata:
   name: pgdata-pvc
 spec:
+  capacity:
+    storage: 100Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: efs-sc2
+  storageClassName: efs-sc
   csi:
     driver: efs.csi.aws.com
     volumeHandle: fs-87cc2d77
