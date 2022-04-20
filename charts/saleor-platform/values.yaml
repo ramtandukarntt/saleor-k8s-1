@@ -6,6 +6,7 @@ postgresql:
   enabled: true
   persistence:
     existingClaim: pgdata-pvc
+  existingSecret: saleor-custom
 
 redis:
   enabled: true
