@@ -257,7 +257,7 @@ saleor-dashboard:
 #        hosts:
 #          - "{{ dashboard_hostname }}"
 
-  staticUrl: "https://nttdatauk-dea-saleor-images.s3.eu-west-2.amazonaws.com/eu-west-2/"
+  staticUrl: "http://localhost:8081/dashboard/"
   apiUrl: "http://saleor-k8s-3-saleor-core-api:80/graphql/"
   apiMountUri: "/dashboard/"
 
