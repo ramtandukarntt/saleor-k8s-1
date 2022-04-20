@@ -4,8 +4,8 @@ type: Generic
 metadata:
   name: saleor-custom
 data:
-  EMAIL_PASSWORD: "dGVzdAo="
-  POSTGRESQL_PASSWORD: "ZHBrdnZWcHk1WmFTQjJDUAo="
-  REDIS_PASSWORD: "dGVzdAo="
-  postgresql-password: "ZHBrdnZWcHk1WmFTQjJDUAo="
-  redis-password: "dGVzdAo="
+  EMAIL_PASSWORD: "dGVzdA=="
+  POSTGRESQL_PASSWORD: "ZHBrdnZWcHk1WmFTQjJDUA=="
+  REDIS_PASSWORD: "dGVzdA=="
+  postgresql-password: "ZHBrdnZWcHk1WmFTQjJDUA=="
+  redis-password: "dGVzdA=="
