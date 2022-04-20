@@ -83,6 +83,11 @@ data:
           location /healthz {
               return 200;
           }
+          
+          location /dashboard/ {
+            alias /app/;
+            try_files $uri $uri/ /index.html;
+          }
       }
 
     {{- range .Values.ingress.hosts }}
