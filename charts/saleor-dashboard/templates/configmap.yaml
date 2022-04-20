@@ -7,6 +7,7 @@ metadata:
     {{- include "saleor-dashboard.labels" . | nindent 4 }}
 data:
   nginx.conf: |
+    daemon off;
     worker_processes  {{ .Values.nginxConfig.workerProcesses }};
     pid /tmp/nginx.pid;
     events {
