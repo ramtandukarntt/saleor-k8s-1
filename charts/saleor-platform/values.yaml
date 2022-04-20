@@ -39,14 +39,14 @@ redis:
   image:
     registry: docker.io
     repository: bitnami/redis
-    tag: 6.0.9-debian-10-r13
+    tag: 6.0.9-debian-10-r66
     pullPolicy: IfNotPresent
   usePassword: false
   cluster:
     enabled: false
 
 nfs-server-provisioner:
-  enabled: true
+  enabled: false
 
 saleor-core:
   enabled: true
