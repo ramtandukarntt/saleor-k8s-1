@@ -53,6 +53,184 @@ saleor-core:
   persistence:
     existingClaim: core-pvc
 
+  worker:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+    livenessProbeSettings:
+      enabled: false
+    readinessProbeSettings:
+      enabled: false
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+
+  api:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+
+  web:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+
+  existingSecret: saleor-custom
+
+  image:
+    repository: ghcr.io/eirenauts/saleor-core
+    pullPolicy: IfNotPresent
+    tag: ""
+  initImage:
+    repository: ghcr.io/eirenauts/saleor-core
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  ingress:
+    enabled: false
+    annotations:
+      cert-manager.io/cluster-issuer: default-issuer
+      ingress.kubernetes.io/force-ssl-redirect: "true"
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      # If using linkerd2
+      # nginx.ingress.kubernetes.io/configuration-snippet: |
+      #   proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
+    hosts:
+      - host: "{{ core_hostname }}"
+        paths:
+          - /
+    tls:
+      - secretName: saleor-core-tls-key
+        hosts:
+          - "{{ core_hostname }}"
+
+  ## Configuration Settings
+
+  graphql:
+    playgroundEnabled: true
+  enableDjangoDebugToolbar: false
+  defaultCountry: US
+  defaultCurrency: USD
+  maxCartLineQuantity: 100
+  allowedHosts:
+    includeIngressHosts: true
+    hosts: []
+  tokens:
+    jwt:
+      accessTokenExpires: true
+      accessTokenExpiresIn: "120 minutes"
+      refreshTokenExpiresIn: "30 days"
+      emailChangeRequestTokenExpiresIn: "1 hour"
+  allowablePlugins:
+    - "saleor.plugins.vatlayer.plugin.VatlayerPlugin"
+    - "saleor.plugins.invoicing.plugin.InvoicingPlugin"
+    - "saleor.payment.gateways.braintree.plugin.BraintreeGatewayPlugin"
+    - "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin"
+
+  ## Helm hook job settings
+
+  jobs:
+    init:
+      migrations:
+        enabled: true
+        ttlSecondsAfterFinished: 1800
+        weight: 1
+      createUsers:
+        enabled: true
+        ttlSecondsAfterFinished: 1800
+        activeDeadlineSeconds: 600
+        weight: 2
+        users:
+          # The secret key depends on what the <email_address> is
+          # as an example secret key for joe@example.com is JOE_EXAMPLE_PASS
+          - email: "<email_address>"
+            password:
+            isStaff: true
+            isSuperuser: true
+      currencyUpdates:
+        enabled: true
+        openExchangesApiKey: ""
+        ttlSecondsAfterFinished: 1800
+        activeDeadlineSeconds: 600
+        weight: 3
+      plugins:
+        enabled: true
+        ttlSecondsAfterFinished: 1800
+        activeDeadlineSeconds: 600
+        backOffLimit: 10
+        weight: 4
+
+  ## External Services settings
+
+  externalServices:
+    # Redis is a caching mechanism
+    redis:
+      # Leave empty in `values.yaml` for security reasons, set in a secret
+      password: ""
+      host: "saleor-k8s-3-redis-master.saleor-k8s-3"
+      # tls true => use redis in url instead of redis
+      tls: false
+      port: 6379
+      dbNumber: 0
+      celeryBrokerDbNumber: 1
+
+    # Postgresql is the primary database
+    postgresql:
+      # Leave empty in `values.yaml` for security reasons, set in a secret
+      password: "test"
+      user: "postgres"
+      host: "saleor-k8s-3-postgresql.saleor-k8s-3"
+      port: 5432
+      database: saleordb
+      requireSSL: false
+
+    # Sentry for application exception monitoring
+    sentry:
+      enabled: false
+      # Leave empty in `values.yaml` for security reasons, set in a secret
+      dsn:
+
+    # Email Configuration [ For sending emails ]
+    email:
+      defaultFromEmail: do-not-reply@nttdata.com
+      # if orderFromEmail is unset, will default to defaultFromEmail
+      orderFromEmail: do-not-reply@nttdata.com
+      smtpSettings:
+        generic:
+          enabled: false
+          loginName: <REDACTED>
+          customDomainName: <REDACTED>
+          providerDomainName: smtp.mailgun.org
+          port: 465
+          extraArgs: "?ssl=True"
+
+    # Google recaptcha key
+    googleRecaptcha:
+      publicKey: "<REDACTED>"
+
+    # Use nginx server for /static and /media assets instead of cloudstorage
+    cloudStorage:
+      enabled: false
+
+    # Enable Vatlayer API to fetch taxes for different classes of items
+    vatLayer:
+      enabled: false
+
+    braintree:
+      enabled: false
+      sandboxMode: true
+      require3DSecure: false
+      merchantId: "<REDACTED>"
+      publicKey: "<REDACTED>"
+      currencies: "<REDACTED>"
+      # The privateKey is set as a secret in an 'existingSecret'
+      privateKey:
+
 saleor-storefront:
   enabled: true
 
