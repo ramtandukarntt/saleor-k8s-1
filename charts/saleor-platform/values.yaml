@@ -40,7 +40,7 @@ redis:
   cluster:
     enabled: false
 
-nfs-server-provisioner:
+nfs:
   enabled: false
 
 saleor-core:
