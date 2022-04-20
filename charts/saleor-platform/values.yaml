@@ -13,8 +13,6 @@ postgresql:
     tag: 11.9.0-debian-10-r73
     pullPolicy: IfNotPresent
     debug: true
-  volumePermissions:
-    enabled: true
   postgresqlUsername: postgres
   postgresqlDatabase: postgres
   resources:
