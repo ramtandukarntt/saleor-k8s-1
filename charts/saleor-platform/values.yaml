@@ -227,7 +227,7 @@ saleor-core:
       privateKey:
 
 saleor-storefront:
-  enabled: true
+  enabled: false
 
 saleor-dashboard:
   enabled: true
