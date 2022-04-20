@@ -14,7 +14,7 @@ postgresql:
     pullPolicy: IfNotPresent
     debug: true
   postgresqlUsername: postgres
-  postgresqlDatabase: postgres
+  postgresqlDatabase: saleordb
   resources:
     requests:
       cpu: 125m
