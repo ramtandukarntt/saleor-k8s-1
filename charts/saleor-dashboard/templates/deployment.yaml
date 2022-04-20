@@ -90,9 +90,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["nginx"]
-          args:
-            - -g
-            - "'daemon off;'"
           ports:
             - containerPort: {{ .Values.port }}
               protocol: TCP
