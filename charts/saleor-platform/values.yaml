@@ -259,5 +259,5 @@ saleor-dashboard:
 
   staticUrl: "https://nttdatauk-dea-saleor-images.s3.eu-west-2.amazonaws.com/eu-west-2/"
   apiUrl: "http://saleor-k8s-3-saleor-core-api:80/graphql/"
-  apiMountUri: ""
+  apiMountUri: "/dashboard/"
 
