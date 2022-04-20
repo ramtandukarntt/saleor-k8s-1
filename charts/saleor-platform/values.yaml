@@ -258,6 +258,6 @@ saleor-dashboard:
 #          - "{{ dashboard_hostname }}"
 
   staticUrl: "http://localhost:8081/dashboard/"
-  apiUrl: "http://saleor-k8s-3-saleor-core-api:80/graphql/"
+  apiUrl: "http://localhost:8000/graphql/"
   apiMountUri: "/dashboard/"
 
