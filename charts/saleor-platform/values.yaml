@@ -6,7 +6,6 @@ postgresql:
   enabled: true
   persistence:
     existingClaim: pgdata-pvc
-  existingSecret: saleor-custom
   volumePermissions:
     enabled: true
   image:
@@ -16,7 +15,8 @@ postgresql:
     pullPolicy: IfNotPresent
     debug: true
   postgresqlUsername: postgres
-  postgresqlDatabase: saleordb
+  postgresqlDatabase: saleor-db
+  postgresqlPassword: test
   resources:
     requests:
       cpu: 125m
@@ -179,7 +179,7 @@ saleor-core:
       user: "postgres"
       host: "saleor-k8s-3-postgresql.saleor-k8s-3"
       port: 5432
-      database: saleordb
+      database: saleor-db
       requireSSL: false
 
     # Sentry for application exception monitoring
