@@ -146,7 +146,7 @@ saleor-core:
             isStaff: true
             isSuperuser: true
       currencyUpdates:
-        enabled: true
+        enabled: false
         openExchangesApiKey: ""
         ttlSecondsAfterFinished: 1800
         activeDeadlineSeconds: 600
