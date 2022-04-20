@@ -120,9 +120,6 @@ spec:
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           command: ["nginx"]
-          args:
-            - -g
-            - "daemon off;"
           ports:
             - containerPort: {{ .Values.web.port }}
               protocol: TCP
