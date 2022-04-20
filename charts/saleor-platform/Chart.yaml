@@ -33,7 +33,7 @@ dependencies:
 
   ## Notes: required if not using an alternative redis instance
   - name: redis
-    version: "12.0.0"
+    version: "12.3.3"
     repository: "https://charts.bitnami.com/bitnami"
     condition: redis.enabled
     tags:
