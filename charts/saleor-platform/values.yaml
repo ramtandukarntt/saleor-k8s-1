@@ -7,6 +7,8 @@ postgresql:
   persistence:
     existingClaim: pgdata-pvc
   existingSecret: saleor-custom
+  volumePermissions:
+    enabled: true
   image:
     registry: docker.io
     repository: bitnami/postgresql
