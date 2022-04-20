@@ -7,6 +7,29 @@ postgresql:
   persistence:
     existingClaim: pgdata-pvc
   existingSecret: saleor-custom
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 11.9.0-debian-10-r73
+    pullPolicy: IfNotPresent
+    debug: true
+  volumePermissions:
+    enabled: true
+  postgresqlUsername: postgres
+  postgresqlDatabase: postgres
+  resources:
+    requests:
+      cpu: 125m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  psp:
+    create: false
+  rbac:
+    create: false
+  replication:
+    enabled: false
 
 redis:
   enabled: true
