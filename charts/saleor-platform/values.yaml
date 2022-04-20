@@ -35,6 +35,15 @@ redis:
   enabled: true
   persistence:
     existingClaim: redis-pvc
+  existingSecret: saleor-custom
+  image:
+    registry: docker.io
+    repository: bitnami/redis
+    tag: 6.0.9-debian-10-r13
+    pullPolicy: IfNotPresent
+    usePassword: true
+    cluster:
+      enabled: false
 
 nfs-server-provisioner:
   enabled: true
