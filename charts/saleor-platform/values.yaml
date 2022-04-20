@@ -171,7 +171,7 @@ saleor-core:
     # Redis is a caching mechanism
     redis:
       # Leave empty in `values.yaml` for security reasons, set in a secret
-      password: ""
+      password: "test"
       host: "saleor-k8s-3-redis-master.saleor-k8s-3"
       # tls true => use redis in url instead of redis
       tls: false
