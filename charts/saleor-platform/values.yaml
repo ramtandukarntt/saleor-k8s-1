@@ -141,10 +141,8 @@ saleor-core:
         activeDeadlineSeconds: 600
         weight: 2
         users:
-          # The secret key depends on what the <email_address> is
-          # as an example secret key for joe@example.com is JOE_EXAMPLE_PASS
-          - email: "<email_address>"
-            password:
+          - email: "admin@example.com"
+            password: "admin"
             isStaff: true
             isSuperuser: true
       currencyUpdates:
