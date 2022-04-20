@@ -3,7 +3,6 @@ kind: Secret
 type: Generic
 metadata:
   name: saleor-custom
-  namespace: saleor-platform
 data:
   EMAIL_PASSWORD: "dGVzdAo="
   POSTGRESQL_PASSWORD: "dGVzdAo="
