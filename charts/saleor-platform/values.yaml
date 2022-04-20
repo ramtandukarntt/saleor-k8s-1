@@ -16,7 +16,7 @@ postgresql:
     debug: true
   postgresqlUsername: postgres
   postgresqlDatabase: saleor-db
-  postgresqlPassword: test
+  postgresqlPassword: dpkvvVpy5ZaSB2CP
   resources:
     requests:
       cpu: 125m
@@ -175,7 +175,7 @@ saleor-core:
     # Postgresql is the primary database
     postgresql:
       # Leave empty in `values.yaml` for security reasons, set in a secret
-      password: "test"
+      password: "dpkvvVpy5ZaSB2CP"
       user: "postgres"
       host: "saleor-k8s-3-postgresql.saleor-k8s-3"
       port: 5432
