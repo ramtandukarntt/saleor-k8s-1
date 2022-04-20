@@ -92,7 +92,7 @@ spec:
           command: ["nginx"]
           args:
             - -g
-            - "daemon off;"
+            - "'daemon off;'"
           ports:
             - containerPort: {{ .Values.port }}
               protocol: TCP
