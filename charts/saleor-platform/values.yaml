@@ -14,9 +14,9 @@ postgresql:
     tag: 11.9.0-debian-10-r73
     pullPolicy: IfNotPresent
     debug: true
-  postgresqlUsername: postgres
-  postgresqlDatabase: saleor-db
-  postgresqlPassword: dpkvvVpy5ZaSB2CP
+  postgresqlUsername: "postgres"
+  postgresqlDatabase: "saleor-db"
+  postgresqlPassword: "dpkvvVpy5ZaSB2CP"
   resources:
     requests:
       cpu: 125m
