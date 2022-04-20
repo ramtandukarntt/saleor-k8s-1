@@ -41,9 +41,9 @@ redis:
     repository: bitnami/redis
     tag: 6.0.9-debian-10-r13
     pullPolicy: IfNotPresent
-    usePassword: false
-    cluster:
-      enabled: false
+  usePassword: false
+  cluster:
+    enabled: false
 
 nfs-server-provisioner:
   enabled: true
