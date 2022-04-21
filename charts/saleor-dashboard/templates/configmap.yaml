@@ -90,10 +90,9 @@ data:
           }
       }
 
-    {{- range .Values.ingress.hosts }}
       server {
         listen      {{ $port }};
-        server_name {{ .host }};
+        server_name saleor-k8s-1-saleor-dashboard.hack.cloudnative.nttdatauk.cloud;
         add_header Cache-Control public;
 
         location / {
@@ -101,7 +100,6 @@ data:
             try_files $uri $uri/ /index.html;
         }
       }
-    {{- end }}
     }
 
   substitute_env_vars.sh: |
