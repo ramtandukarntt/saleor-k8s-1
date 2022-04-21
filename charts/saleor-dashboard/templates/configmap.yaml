@@ -8,6 +8,7 @@ metadata:
 data:
   nginx.conf: |
     daemon off;
+    server_names_hash_bucket_size  128;
     worker_processes  {{ .Values.nginxConfig.workerProcesses }};
     pid /tmp/nginx.pid;
     events {
