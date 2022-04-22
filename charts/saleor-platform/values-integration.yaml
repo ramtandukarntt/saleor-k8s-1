@@ -208,7 +208,7 @@ saleor-core:
 
     # Use nginx server for /static and /media assets instead of cloudstorage
     cloudStorage:
-      enabled: false
+      enabled: true
 
     # Enable Vatlayer API to fetch taxes for different classes of items
     vatLayer:
