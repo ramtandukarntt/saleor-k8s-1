@@ -105,7 +105,7 @@ saleor-core:
 #          - "{{ core_hostname }}"
 
   ## Configuration Settings
-
+  mediaUrl: /
   graphql:
     playgroundEnabled: true
   enableDjangoDebugToolbar: false
