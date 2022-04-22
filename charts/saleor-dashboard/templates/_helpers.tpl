@@ -66,6 +66,13 @@ Generate standard environment configuration.
 */}}
 {{- define "saleor-dashboard.env" -}}
 env:
+{{- if .Values.dashUrl }}
+  - name: DASH_URL
+    value: {{ .Values.dashUrl | quote }}
+{{- else }}
+  - name: DASH_URL
+    value: ""
+{{- end }}
 {{- if .Values.staticUrl }}
   - name: STATIC_URL
     value: {{ .Values.staticUrl | quote }}
