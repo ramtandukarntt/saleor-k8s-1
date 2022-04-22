@@ -255,7 +255,7 @@ saleor-dashboard:
 #        hosts:
 #          - "{{ dashboard_hostname }}"
 
-  staticUrl: "https://nttdatauk-dea-saleor-images.s3.eu-west-2.amazonaws.com/eu-west-2/"
+  staticUrl: "https://saleor-k8s-1-saleor-dashboard.hack.cloudnative.nttdatauk.cloud/dashboard"
   apiUrl: "https://saleor-k8s-1-saleor-core-api.hack.cloudnative.nttdatauk.cloud/graphql/"
   apiMountUri: "/dashboard/"
 
