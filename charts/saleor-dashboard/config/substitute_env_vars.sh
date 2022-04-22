@@ -23,11 +23,12 @@ main() {
     local dashboard_js_base_filepath
     dashboard_js_base_filepath="$(find /app -type f -iname 'dashboard.*.js' -printf "%P")"
 
+    if [[ -z "${DASH_URL}" ]]; then export DASH_URL="empty_string"; fi
     if [[ -z "${STATIC_URL}" ]]; then export STATIC_URL="empty_string"; fi
     if [[ -z "${API_URI}" ]]; then export API_URI="empty_string"; fi
     if [[ -z "${APP_MOUNT_URI}" ]]; then export APP_MOUNT_URI="empty_string"; fi
 
-    replace_vars "STATIC_URL" "${STATIC_URL}" "/app/index.html" "/etc/nginx/app/index.html"
+    replace_vars "STATIC_URL" "${DASH_URL}" "/app/index.html" "/etc/nginx/app/index.html"
     replace_vars "STATIC_URL" "${STATIC_URL}" "/app/${dashboard_js_base_filepath}" "/etc/nginx/app/${dashboard_js_base_filepath}.1"
     replace_vars "API_URI" "${API_URI}" "/etc/nginx/app/${dashboard_js_base_filepath}.1" "/etc/nginx/app/${dashboard_js_base_filepath}.2"
     replace_vars "APP_MOUNT_URI" "${APP_MOUNT_URI}" "/etc/nginx/app/${dashboard_js_base_filepath}.2" "/etc/nginx/app/${dashboard_js_base_filepath}.3"
