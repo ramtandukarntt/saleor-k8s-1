@@ -105,7 +105,7 @@ saleor-core:
 #          - "{{ core_hostname }}"
 
   ## Configuration Settings
-  mediaUrl: /
+  mediaUrl: https://nttdatauk-dea-saleor-images-integration.s3.eu-west-2.amazonaws.com/eu-west-2/
   graphql:
     playgroundEnabled: true
   enableDjangoDebugToolbar: false
