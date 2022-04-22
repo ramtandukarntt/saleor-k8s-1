@@ -97,7 +97,7 @@ data:
         server_name saleor-k8s-1-saleor-dashboard.hack.cloudnative.nttdatauk.cloud;
         add_header Cache-Control public;
 
-        location / {
+        location /dashboard/ {
             alias /app/;
             try_files $uri $uri/ /index.html;
         }
