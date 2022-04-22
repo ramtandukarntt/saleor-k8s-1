@@ -45,6 +45,7 @@ nfs:
 
 saleor-core:
   enabled: true
+  environment: 1
   persistence:
     existingClaim: core-pvc
 
@@ -229,6 +230,7 @@ saleor-storefront:
 
 saleor-dashboard:
   enabled: true
+  environment: 1
   replicaCount: 1
   autoscaling:
     enabled: false
