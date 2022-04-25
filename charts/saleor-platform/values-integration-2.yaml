@@ -68,7 +68,7 @@ saleor-core:
     replicaCount: 1
     autoscaling:
       enabled: false
-  environment: integration-2-2
+  environment: integration-2
   web:
     replicaCount: 1
     autoscaling:
