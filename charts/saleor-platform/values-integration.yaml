@@ -110,7 +110,7 @@ saleor-core:
     playgroundEnabled: true
   enableDjangoDebugToolbar: false
   defaultCountry: UK
-  defaultCurrency: GBP
+  defaultCurrency: USD
   maxCartLineQuantity: 100
   allowedHosts:
     includeIngressHosts: true
