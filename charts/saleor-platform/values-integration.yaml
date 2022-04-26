@@ -109,8 +109,8 @@ saleor-core:
   graphql:
     playgroundEnabled: true
   enableDjangoDebugToolbar: false
-  defaultCountry: US
-  defaultCurrency: USD
+  defaultCountry: UK
+  defaultCurrency: GBP
   maxCartLineQuantity: 100
   allowedHosts:
     includeIngressHosts: true
