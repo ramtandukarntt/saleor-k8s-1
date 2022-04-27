@@ -179,7 +179,7 @@ saleor-core:
       user: "postgres"
       host: "saleor-k8s-staging-postgresql"
       port: 5432
-      database: staging
+      database: saleor-db
       requireSSL: false
 
     # Sentry for application exception monitoring
