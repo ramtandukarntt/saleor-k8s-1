@@ -129,7 +129,7 @@ web:
   nodeSelector: {}
   tolerations: []
   image:
-    repository: "889605739882.dkr.ecr.eu-west-2.amazonaws.com/nginxinc/nginx-unprivileged:1.19.5"
+    repository: "889605739882.dkr.ecr.eu-west-2.amazonaws.com/nginxinc/nginx-unprivileged"
     tag: "1.19.5"
     pullPolicy: IfNotPresent
   port: 8080
