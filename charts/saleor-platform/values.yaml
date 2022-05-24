@@ -82,9 +82,9 @@ saleor-core:
     pullPolicy: IfNotPresent
     tag: "latest"
   initImage:
-    repository: 889605739882.dkr.ecr.eu-west-2.amazonaws.com/dea/saleor-k8s_saleor_core
+    repository: ghcr.io/eirenauts/saleor-core
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: ""
 
   ingress:
     enabled: false
