@@ -30,7 +30,7 @@ metadata:
 data:
 
   ## Django Configuration parameters
-
+  OTEL_PROPAGATORS: "b3,b3multi,tracecontext,baggage"
   DJANGO_SETTINGS_MODULE: {{ .Values.settingsModule | quote }}
   DEBUG: {{ .Values.debugMode | toString | title | quote }}
   INTERNAL_IPS: {{  .Values.internalIps | join "," | quote }}
