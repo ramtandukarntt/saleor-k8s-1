@@ -110,6 +110,8 @@ env:
     value: '6831'
   - name: JAEGER_LOGGING
     value: 'True'
+  - name: OTEL_PROPAGATORS
+    value: 'b3,b3multi,tracecontext,baggage'
 {{- if .Values.existingSecret }}
   - name: SECRET_KEY
     value: "$(SALEOR_SECRET_KEY)"
