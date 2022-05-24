@@ -78,13 +78,13 @@ saleor-core:
   existingSecret: saleor-custom
 
   image:
-    repository: ghcr.io/eirenauts/saleor-core
+    repository: 889605739882.dkr.ecr.eu-west-2.amazonaws.com/dea/saleor-k8s_saleor_core
     pullPolicy: IfNotPresent
-    tag: ""
+    tag: "latest"
   initImage:
-    repository: ghcr.io/eirenauts/saleor-core
+    repository: 889605739882.dkr.ecr.eu-west-2.amazonaws.com/dea/saleor-k8s_saleor_core
     pullPolicy: IfNotPresent
-    tag: ""
+    tag: "latest"
 
   ingress:
     enabled: false
