@@ -85,6 +85,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
+            - opentelemetry-instrument
             - python3
             - manage.py
             - runserver 
