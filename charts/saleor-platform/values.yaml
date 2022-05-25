@@ -80,7 +80,7 @@ saleor-core:
   image:
     repository: 889605739882.dkr.ecr.eu-west-2.amazonaws.com/dea/saleor-k8s_saleor_core
     pullPolicy: IfNotPresent
-    tag: "0.0.3"
+    tag: "0.0.4"
   initImage:
     repository: ghcr.io/eirenauts/saleor-core
     pullPolicy: IfNotPresent
