@@ -104,6 +104,8 @@ envFrom:
       name: {{ .Values.existingSecret }}
     {{- end }}
 env:
+  - name: OTEL_PROPAGATORS
+    value: 'b3,b3multi,tracecontext,baggage'
   - name: DEBUG
     value: 'False'
   - name: ALLOWED_HOSTS
