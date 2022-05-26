@@ -85,12 +85,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - opentelemetry-instrument
-            - python3
-            - manage.py
-            - runserver 
-            - '--noreload'
-            - '0.0.0.0:8000'
+            - gunicorn
+            - -c
+            - /app/saleor/gunicorn_conf.py
+            - saleor.asgi:application
           ports:
             - containerPort: {{ .Values.api.gunicorn.port }}
               protocol: TCP
