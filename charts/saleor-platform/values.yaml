@@ -107,6 +107,7 @@ saleor-core:
 
   ## Configuration Settings
   mediaUrl: /
+  staticUrl: "https://nttdatauk-dea-saleor-images.s3.eu-west-2.amazonaws.com/eu-west-2/"
   graphql:
     playgroundEnabled: true
   enableDjangoDebugToolbar: false
