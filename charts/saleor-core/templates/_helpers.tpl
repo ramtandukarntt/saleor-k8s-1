@@ -104,18 +104,14 @@ envFrom:
       name: {{ .Values.existingSecret }}
     {{- end }}
 env:
-  - name: DEBUG
-    value: 'False'
-  - name: ALLOWED_HOSTS
-    value: 'saleor-k8s-1-saleor-core-api.hack.cloudnative.nttdatauk.cloud'
-  - name: ALLOWED_CLIENT_HOSTS
-    value: '*'
+{{- if eq .Values.environment "1" }}
   - name: JAEGER_AGENT_HOST
     value: 'jeager-aio-agent.observability'
   - name: JAEGER_AGENT_PORT
     value: '6831'
   - name: JAEGER_LOGGING
     value: 'True'
+{{- end }}
 {{- if .Values.existingSecret }}
   - name: SECRET_KEY
     value: "$(SALEOR_SECRET_KEY)"

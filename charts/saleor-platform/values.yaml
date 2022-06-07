@@ -45,7 +45,7 @@ nfs:
 
 saleor-core:
   enabled: true
-  environment: 1
+  environment: "1"
   persistence:
     existingClaim: core-pvc
 
