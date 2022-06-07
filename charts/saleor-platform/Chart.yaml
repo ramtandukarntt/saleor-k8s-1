@@ -26,7 +26,7 @@ dependencies:
   ## Notes: required if not using an alternative postgresql instance
   - name: postgresql
     version: "9.8.11"
-    repository: "https://charts.bitnami.com/bitnami"
+    repository: "https://raw.githubusercontent.com/bitnami/charts/eb5f9a9513d987b519f0ecd732e7031241c50328/bitnami"
     condition: postgresql.enabled
     tags:
       - database
@@ -34,7 +34,7 @@ dependencies:
   ## Notes: required if not using an alternative redis instance
   - name: redis
     version: "12.10.1"
-    repository: "https://charts.bitnami.com/bitnami"
+    repository: "https://raw.githubusercontent.com/bitnami/charts/eb5f9a9513d987b519f0ecd732e7031241c50328/bitnami"
     condition: redis.enabled
     tags:
       - cache
